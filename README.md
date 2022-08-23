@@ -1,0 +1,2 @@
+# SpecificationDemo
+Specification pattern example
