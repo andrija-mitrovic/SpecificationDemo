@@ -8,5 +8,6 @@
         public int YearsOfExperience { get; set; }
         public decimal EstimatedIncome { get; set; }
         public Address Address { get; set; }
+        public List<Technology> Technologies { get; set; }
     }
 }
