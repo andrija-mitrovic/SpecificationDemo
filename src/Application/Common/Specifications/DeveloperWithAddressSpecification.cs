@@ -9,6 +9,8 @@ namespace Application.Common.Specifications
         {
             AddInclude(x => x.Address);
             AddInclude(x => x.Technologies);
+            AddInclude($"{nameof(Developer.Technologies)}.{nameof(Technology.Producer)}"); //.ThenInclude()
+            //AddInclude("Technologies.Producer");
         }
     }
 }

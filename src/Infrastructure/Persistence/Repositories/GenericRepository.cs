@@ -23,7 +23,7 @@ namespace Infrastructure.Persistence.Repositories
             return await _context.Set<T>().FindAsync();
         }
 
-        public IEnumerable<T> FindWithSpecificationPattern(ISpecification<T> specification = null)
+        public IEnumerable<T> Find(ISpecification<T> specification = null)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }

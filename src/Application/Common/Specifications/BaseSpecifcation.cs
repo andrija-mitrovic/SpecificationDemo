@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Application.Common.Specifications
 {
-    public class BaseSpecifcation<T> : ISpecification<T>
+    public abstract class BaseSpecifcation<T> : ISpecification<T>
     {
         public BaseSpecifcation()
         {
@@ -17,21 +17,24 @@ namespace Application.Common.Specifications
         public List<string> IncludeStrings { get; } = new List<string>();
         public Expression<Func<T, object>> OrderBy { get; private set; }
         public Expression<Func<T, object>> OrderByDescending { get; private set; }
-        protected void AddInclude(Expression<Func<T, object>> includeExpression)
+        protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
         }
+
         protected virtual void AddInclude(string includeString)
         {
             IncludeStrings.Add(includeString);
         }
-        protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
+
+        protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
-        protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression)
+
+        protected virtual void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
-            OrderByDescending = orderByDescExpression;
+            OrderByDescending = orderByDescendingExpression;
         }
     }
 }

@@ -33,9 +33,9 @@ namespace API.Controllers
         [HttpGet("specify")]
         public async Task<IActionResult> Specify()
         {
-            var specification = new DeveloperWithAddressSpecification(5, 100000);
+            var specification = new DeveloperWithAddressSpecification(5, 90000);
             //var specification = new DeveloperByIncomeSpecification();
-            var developers = _repository.FindWithSpecificationPattern(specification);
+            var developers = _repository.Find(specification);
             return Ok(developers);
         }
     }

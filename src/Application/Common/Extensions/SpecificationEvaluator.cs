@@ -6,24 +6,34 @@ namespace Infrastructure.Application.Common.Extensions
 {
     public class SpecificationEvaluator<TEntity> where TEntity : class
     {
-        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> spec)
+        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> specification)
         {
             var query = inputQuery;
 
-            if (spec.Criteria != null)
+            // modify the IQueryable using the specification's criteria expression
+            if (specification.Criteria != null)
             {
-                query = query.Where(spec.Criteria);
-            }
-            if (spec.OrderBy != null)
-            {
-                query = query.OrderBy(spec.OrderBy);
-            }
-            if (spec.OrderByDescending != null)
-            {
-                query = query.OrderByDescending(spec.OrderByDescending);
+                query = query.Where(specification.Criteria);
             }
 
-            query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+            // Includes all expression-based includes
+            query = specification.Includes.Aggregate(query,
+                                    (current, include) => current.Include(include));
+
+            // Include any string-based include statements
+            query = specification.IncludeStrings.Aggregate(query,
+                                    (current, include) => current.Include(include));
+
+            // Apply ordering if expressions are set
+            if (specification.OrderBy != null)
+            {
+                query = query.OrderBy(specification.OrderBy);
+            }
+            else if (specification.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(specification.OrderByDescending);
+            }
+
             return query;
         }
     }

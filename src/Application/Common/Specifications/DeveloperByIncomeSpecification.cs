@@ -6,7 +6,7 @@ namespace Application.Common.Specifications
     {
         public DeveloperByIncomeSpecification()
         {
-            AddOrderByDescending(x => x.EstimatedIncome);
+            //OrderByDescending(x => x.EstimatedIncome);
         }
     }
 }
